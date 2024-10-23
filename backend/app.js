@@ -11,6 +11,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const cmsRoutes = require('./routes/cms');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -28,10 +29,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === 'production' }
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 1000 * 60 * 60 * 24 // 24 hours
+    }
 }));
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -61,16 +65,14 @@ app.get('/dashboard', async (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Error:', err.message);
+    console.error('Stack:', err.stack);
     res.status(500).render('error', { error: 'Something went wrong!' });
 });
 
-// Serve static files from the frontend directory
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
-
-// Catch-all route to serve the frontend index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+// Instead, add this at the end of your route definitions
+app.use((req, res, next) => {
+  res.status(404).render('error', { error: 'Page not found' });
 });
 
 // Export the Express app

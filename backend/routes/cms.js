@@ -8,6 +8,7 @@ const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         next();
     } else {
+        console.log('User not authenticated, redirecting to login');
         res.redirect('/auth/login');
     }
 };
