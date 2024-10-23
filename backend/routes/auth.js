@@ -8,7 +8,16 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    // Implement login logic
+    // Implement login logic here
+    // For example:
+    // const { email, password } = req.body;
+    // const user = await User.findOne({ email });
+    // if (user && await bcrypt.compare(password, user.password)) {
+    //     req.session.user = user;
+    //     res.redirect('/dashboard');
+    // } else {
+    //     res.render('login', { error: 'Invalid credentials' });
+    // }
 });
 
 router.post('/register', async (req, res) => {

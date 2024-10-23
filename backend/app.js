@@ -63,6 +63,11 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
+// Catch-all route for frontend
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error('Error:', err.message);
@@ -70,17 +75,11 @@ app.use((err, req, res, next) => {
     res.status(500).render('error', { error: 'Something went wrong!' });
 });
 
-// Instead, add this at the end of your route definitions
-app.use((req, res, next) => {
-  res.status(404).render('error', { error: 'Page not found' });
-});
-
 // Export the Express app
 module.exports = app;
 
 // Only listen on a port if not running on Vercel
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
