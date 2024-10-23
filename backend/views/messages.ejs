@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - JON Solutions</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">JON Solutions Admin</div>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/messages" class="active">Messages</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Messages</h1>
+        <table class="message-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% messages.forEach(message => { %>
+                    <tr>
+                        <td><%= message.name %></td>
+                        <td><%= message.email %></td>
+                        <td><%= message.message.substring(0, 50) %>...</td>
+                        <td><%= message.createdAt.toDateString() %></td>
+                        <td>
+                            <button class="btn btn-view" data-id="<%= message._id %>">View</button>
+                            <button class="btn btn-delete" data-id="<%= message._id %>">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 JON Solutions. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

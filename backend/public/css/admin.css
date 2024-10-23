@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 2rem;
+}
+
+.dashboard-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.summary-card {
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+    width: 200px;
+}
+
+.summary-card h2 {
+    margin-bottom: 0.5rem;
+}
+
+.count {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: #4CAF50;
+}
+
+.btn-delete {
+    background-color: #f44336;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

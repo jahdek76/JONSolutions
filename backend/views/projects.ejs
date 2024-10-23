@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - JON Solutions</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">JON Solutions Admin</div>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/projects" class="active">Projects</a></li>
+                <li><a href="/messages">Messages</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Projects</h1>
+        <button id="addProjectBtn" class="btn">Add New Project</button>
+        <table class="project-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Client</th>
+                    <th>Completion Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% projects.forEach(project => { %>
+                    <tr>
+                        <td><%= project.title %></td>
+                        <td><%= project.client %></td>
+                        <td><%= project.completionDate.toDateString() %></td>
+                        <td>
+                            <button class="btn btn-edit" data-id="<%= project._id %>">Edit</button>
+                            <button class="btn btn-delete" data-id="<%= project._id %>">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 JON Solutions. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
