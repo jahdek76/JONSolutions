@@ -26,16 +26,24 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session configuration for Vercel's serverless environment
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    store: MongoStore.create({ 
+        mongoUrl: process.env.MONGODB_URI,
+        ttl: 14 * 24 * 60 * 60, // = 14 days. Default
+        autoRemove: 'native' // Default
+    }),
     cookie: { 
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 1000 * 60 * 60 * 24 // 24 hours
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 14 // 14 days
     }
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -63,16 +71,20 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
-// Catch-all route for frontend
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+app.get('/test', (req, res) => {
+  res.json({ message: 'Server is running' });
+});
+
+// Catch-all route
+app.use('*', (req, res) => {
+  res.status(404).json({ error: 'Not Found' });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error('Error:', err.message);
-    console.error('Stack:', err.stack);
-    res.status(500).render('error', { error: 'Something went wrong!' });
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
 // Export the Express app
