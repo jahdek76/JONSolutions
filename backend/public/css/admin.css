@@ -38,15 +38,14 @@ main {
 .dashboard-summary {
     display: flex;
     justify-content: space-around;
-    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .summary-card {
     background-color: #f4f4f4;
-    border-radius: 5px;
     padding: 1rem;
+    border-radius: 5px;
     text-align: center;
-    width: 200px;
 }
 
 .summary-card h2 {
@@ -61,13 +60,13 @@ main {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 th, td {
+    border: 1px solid #ddd;
     padding: 0.5rem;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
@@ -76,21 +75,21 @@ th {
 
 .btn {
     display: inline-block;
-    background-color: #333;
-    color: #fff;
     padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
     text-decoration: none;
-    border: none;
     border-radius: 3px;
+    border: none;
     cursor: pointer;
 }
 
 .btn-edit {
-    background-color: #4CAF50;
+    background-color: #28a745;
 }
 
 .btn-delete {
-    background-color: #f44336;
+    background-color: #dc3545;
 }
 
 footer {
@@ -101,4 +100,70 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+.dashboard-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form div {
+    margin-bottom: 1rem;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+form input[type="text"],
+form input[type="date"],
+form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.error {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+/* Add these styles to the existing CSS file */
+
+.search-filter-form {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search-filter-form input,
+.search-filter-form select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-read {
+    background-color: #28a745;
+}
+
+.btn-unread {
+    background-color: #ffc107;
+    color: #000;
 }

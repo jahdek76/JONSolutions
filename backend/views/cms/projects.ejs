@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+<h1>Manage Projects</h1>
+<a href="/cms/projects/new" class="btn">Add New Project</a>
+
+<form action="/cms/projects" method="GET" class="search-filter-form">
+    <input type="text" name="search" placeholder="Search projects" value="<%= search %>">
+    <select name="filter">
+        <option value="">All Clients</option>
+        <% clients.forEach(client => { %>
+            <option value="<%= client %>" <%= filter === client ? 'selected' : '' %>><%= client %></option>
+        <% }) %>
+    </select>
+    <button type="submit" class="btn">Apply</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Client</th>
+            <th>Completion Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% projects.forEach(project => { %>
+            <tr>
+                <td><%= project.title %></td>
+                <td><%= project.client %></td>
+                <td><%= project.completionDate.toDateString() %></td>
+                <td>
+                    <a href="/cms/projects/<%= project._id %>/edit" class="btn btn-edit">Edit</a>
+                    <form action="/cms/projects/<%= project._id %>/delete" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="/cms/projects?page=<%= currentPage - 1 %>&search=<%= search %>&filter=<%= filter %>" class="btn">Previous</a>
+    <% } %>
+    <span>Page <%= currentPage %> of <%= totalPages %></span>
+    <% if (currentPage < totalPages) { %>
+        <a href="/cms/projects?page=<%= currentPage + 1 %>&search=<%= search %>&filter=<%= filter %>" class="btn">Next</a>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

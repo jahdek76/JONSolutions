@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+<h1>Manage Messages</h1>
+
+<form action="/cms/messages" method="GET" class="search-filter-form">
+    <input type="text" name="search" placeholder="Search messages" value="<%= search %>">
+    <select name="filter">
+        <option value="">All Messages</option>
+        <option value="read" <%= filter === 'read' ? 'selected' : '' %>>Read</option>
+        <option value="unread" <%= filter === 'unread' ? 'selected' : '' %>>Unread</option>
+    </select>
+    <button type="submit" class="btn">Apply</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% messages.forEach(message => { %>
+            <tr>
+                <td><%= message.name %></td>
+                <td><%= message.email %></td>
+                <td><%= message.message.substring(0, 50) %>...</td>
+                <td><%= message.createdAt.toDateString() %></td>
+                <td><%= message.read ? 'Read' : 'Unread' %></td>
+                <td>
+                    <form action="/cms/messages/<%= message._id %>/toggle-read" method="POST" style="display: inline;">
+                        <button type="submit" class="btn <%= message.read ? 'btn-unread' : 'btn-read' %>">
+                            <%= message.read ? 'Mark as Unread' : 'Mark as Read' %>
+                        </button>
+                    </form>
+                    <form action="/cms/messages/<%= message._id %>/delete" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this message?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="/cms/messages?page=<%= currentPage - 1 %>&search=<%= search %>&filter=<%= filter %>" class="btn">Previous</a>
+    <% } %>
+    <span>Page <%= currentPage %> of <%= totalPages %></span>
+    <% if (currentPage < totalPages) { %>
+        <a href="/cms/messages?page=<%= currentPage + 1 %>&search=<%= search %>&filter=<%= filter %>" class="btn">Next</a>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

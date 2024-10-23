@@ -10,6 +10,7 @@ const Message = require('./models/message');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const cmsRoutes = require('./routes/cms');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(compression());
 app.use('/auth', authRoutes);
 app.use('/projects', projectRoutes);
 app.use('/messages', messageRoutes);
+app.use('/cms', cmsRoutes);
 
 // Dashboard route
 app.get('/dashboard', async (req, res) => {
