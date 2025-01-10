@@ -8,11 +8,12 @@
     "dev": "nodemon backend/app.js",
     "client": "cd frontend && npm start",
     "dev:full": "concurrently \"npm run dev\" \"npm run client\"",
-    "build": "cd frontend && npm install --legacy-peer-deps && CI=false npm run build",
-    "vercel-build": "cd frontend && npm install --legacy-peer-deps && CI=false npm run build"
+    "build": "cd frontend && npm install --legacy-peer-deps && SKIP_PREFLIGHT_CHECK=true CI=false npm run build",
+    "vercel-build": "cd frontend && npm install --legacy-peer-deps && SKIP_PREFLIGHT_CHECK=true CI=false npm run build"
   },
   "dependencies": {
     "ajv": "^8.12.0",
+    "ajv-keywords": "^5.1.0",
     "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
@@ -21,7 +22,8 @@
     "express": "^4.18.2",
     "mongoose": "^8.0.1",
     "multer": "^1.4.5-lts.1",
-    "openai": "^4.20.0"
+    "openai": "^4.20.0",
+    "schema-utils": "^4.2.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
