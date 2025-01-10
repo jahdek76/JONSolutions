@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Leads from './pages/Leads';
 import Calls from './pages/Calls';
 import Training from './pages/Training';
+import './App.css';
 
 const theme = createTheme({
   palette: {
@@ -22,13 +23,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/leads" element={<Leads />} />
-          <Route path="/calls" element={<Calls />} />
-          <Route path="/training" element={<Training />} />
-        </Routes>
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/leads" element={<Leads />} />
+            <Route path="/calls" element={<Calls />} />
+            <Route path="/training" element={<Training />} />
+          </Routes>
+        </div>
       </Router>
     </ThemeProvider>
   );
