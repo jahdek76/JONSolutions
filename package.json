@@ -8,8 +8,8 @@
     "dev": "nodemon backend/app.js",
     "client": "cd frontend && npm start",
     "dev:full": "concurrently \"npm run dev\" \"npm run client\"",
-    "build": "cd frontend && npm install --legacy-peer-deps && SKIP_PREFLIGHT_CHECK=true CI=false npm run build",
-    "vercel-build": "cd frontend && npm install --legacy-peer-deps && SKIP_PREFLIGHT_CHECK=true CI=false npm run build"
+    "build": "./vercel.build.sh",
+    "vercel-build": "./vercel.build.sh"
   },
   "dependencies": {
     "ajv": "^8.12.0",
