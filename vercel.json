@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build",
+        "buildCommand": "npm run vercel-build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/app.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/build/index.html"
+    }
+  ],
+  "outputDirectory": "frontend/build",
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "ELEVEN_LABS_API_KEY": "@eleven_labs_api_key",
+    "NODE_ENV": "production",
+    "SKIP_PREFLIGHT_CHECK": "true"
+  }
+} 

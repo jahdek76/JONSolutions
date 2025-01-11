@@ -6,6 +6,7 @@ const callsRouter = require('./routes/calls');
 const leadsRouter = require('./routes/leads');
 const trainingRouter = require('./routes/training');
 const statsRouter = require('./routes/stats');
+const path = require('path');
 
 const app = express();
 
@@ -23,16 +24,24 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// API routes
 app.use('/api/calls', callsRouter);
 app.use('/api/leads', leadsRouter);
 app.use('/api/training', trainingRouter);
 app.use('/api/stats', statsRouter);
 
-// Error handling
+// Handle React routing, return all requests to React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
+// Error handling middleware should be last
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
 const PORT = config.port;
