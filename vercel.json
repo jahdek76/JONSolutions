@@ -9,38 +9,27 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "buildCommand": "npm run vercel-build"
+        "distDir": "frontend/build"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.js"
+      "dest": "/backend/app.js"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "frontend/build/static/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "frontend/build/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "frontend/build/manifest.json"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/build/index.html"
+      "dest": "/frontend/build/index.html"
     }
   ],
   "env": {
     "MONGODB_URI": "@mongodb_uri",
     "OPENAI_API_KEY": "@openai_api_key",
     "ELEVEN_LABS_API_KEY": "@eleven_labs_api_key",
-    "NODE_ENV": "production",
-    "SKIP_PREFLIGHT_CHECK": "true"
+    "NODE_ENV": "production"
   }
 } 
