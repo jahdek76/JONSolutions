@@ -17,17 +17,25 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/app.js"
+      "dest": "backend/app.js"
     },
     {
-      "handle": "filesystem"
+      "src": "/static/(.*)",
+      "dest": "frontend/build/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "frontend/build/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "frontend/build/manifest.json"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
+      "dest": "frontend/build/index.html"
     }
   ],
-  "outputDirectory": "frontend/build",
   "env": {
     "MONGODB_URI": "@mongodb_uri",
     "OPENAI_API_KEY": "@openai_api_key",

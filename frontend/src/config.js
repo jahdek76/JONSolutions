@@ -1,6 +1,6 @@
 const config = {
   apiUrl: process.env.NODE_ENV === 'production' 
-    ? 'https://your-vercel-domain.vercel.app/api'
+    ? '/api'
     : 'http://localhost:3000/api'
 };
 

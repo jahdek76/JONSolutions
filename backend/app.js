@@ -16,27 +16,25 @@ mongoose.connect(config.mongoDbUri)
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://your-project-name.vercel.app' 
-    : 'http://localhost:3000'
-}));
+app.use(cors());  // Allow all origins in production
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// API routes
+// API routes first
 app.use('/api/calls', callsRouter);
 app.use('/api/leads', leadsRouter);
 app.use('/api/training', trainingRouter);
 app.use('/api/stats', statsRouter);
 
-// Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
+// Serve static files from the React app
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
+}
 
 // Error handling middleware should be last
 app.use((err, req, res, next) => {
@@ -44,7 +42,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-const PORT = config.port;
-app.listen(PORT, () => {
+module.exports = app;  // Export the app for Vercel
+
+// Only listen if not in production (Vercel will handle this)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = config.port;
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-}); 
+  });
+} 
